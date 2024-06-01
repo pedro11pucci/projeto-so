@@ -1,5 +1,6 @@
-import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Login } from "../components/login/login";
+import { SignUp } from "../components/signup/signup";
 
 export const Routes = () => {
 
@@ -7,6 +8,10 @@ export const Routes = () => {
         {
             path: '/',
             element: <Login />
+        },
+        {
+            path: '/signup',
+            element: <SignUp />
         }
     ]
 

@@ -1,22 +1,24 @@
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 
-export const Login = () => {
+export const SignUp = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
       user: data.get("user"),
       password: data.get("password"),
+      confirm_password: data.get("confirm_password")
     });
-  };
+    if(data.get("password") != data.get("confirm_password")){
+        window.alert("Senhas não estão iguais")    
+    };
+  }
 
   return (
     <Container component="main" maxWidth="sm">
@@ -33,7 +35,7 @@ export const Login = () => {
         }}
       >
         <Typography component="h1" variant="h5">
-          Entrar
+          Criar nova conta
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <TextField
@@ -56,18 +58,28 @@ export const Login = () => {
             id="password"
             autoComplete="current-password"
           />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="confirm_password"
+            label="Confirmar Senha"
+            type="password"
+            id="confirm_password"
+            autoComplete="confirm-password"
+          />
           <Button
             type="submit"
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Entrar
+            Criar nova conta
           </Button>
           <Grid container>
             <Grid item>
-              <Link href="/signup" variant="body2">
-                {"Não tem uma conta? Criar"}
+              <Link href="/" variant="body2">
+                {"Já tem uma conta? Entrar"}
               </Link>
             </Grid>
           </Grid>
