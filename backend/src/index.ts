@@ -1,6 +1,7 @@
 import Express from "express";
 import cors from "cors";
 import appDataSource from "./infra/data-source";
+import userRouter from "./routes/user.routes";
 
 require("dotenv").config()
 const app = Express()
@@ -21,3 +22,5 @@ appDataSource.initialize().then((connection) => {
 app.get('/', async (req, res) => {
     res.send("Hello World!")
 })
+
+app.use('/user', userRouter)
