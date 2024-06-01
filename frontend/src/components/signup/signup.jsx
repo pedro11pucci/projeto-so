@@ -7,17 +7,26 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 
 export const SignUp = () => {
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      user: data.get("user"),
-      password: data.get("password"),
-      confirm_password: data.get("confirm_password")
-    });
     if(data.get("password") != data.get("confirm_password")){
         window.alert("Senhas não estão iguais")    
-    };
+    } else {
+      const request = await fetch('/user/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          user: data.get("user"),
+          password: data.get("password")
+        })
+      })
+      const response = request
+      if(response.status == 201) window.alert("Usuário criado")
+      if(response.status == 409) window.alert("Usuário já existente")
+    }
   }
 
   return (
