@@ -1,6 +1,9 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Login } from "../components/login/login";
 import { SignUp } from "../components/signup/signup";
+import { MeetingCard } from "../components/home/card/card";
+import { Home } from "../components/home/home";
+import { Form } from "../components/form/form";
 
 export const Routes = () => {
 
@@ -15,8 +18,20 @@ export const Routes = () => {
         }
     ]
 
+    const authenticatedRoutes = [
+        {
+            path: '/home',
+            element: <Home />
+        },
+        {
+            path: '/form',
+            element: <Form />
+        }
+    ]
+
     const router = createBrowserRouter([
-        ...routes
+        ...routes,
+        ...authenticatedRoutes
     ])
 
     return <RouterProvider router={router} />
