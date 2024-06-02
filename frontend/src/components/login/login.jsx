@@ -9,13 +9,26 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 
 export const Login = () => {
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      user: data.get("user"),
-      password: data.get("password"),
-    });
+    if(!data.get("user") || !data.get("password")){
+      window.alert("Insira todos os dados")
+    }else{
+      const request = fetch('/user/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          user: data.get("user"),
+          password: data.get("password")
+        })
+      })
+      const response = await request
+      if(response.status == 200) window.alert("FEZ LOGIN")
+      if(response.status == 401) window.alert("NÂO FOI")  
+    }
   };
 
   return (

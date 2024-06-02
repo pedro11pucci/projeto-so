@@ -22,4 +22,19 @@ export default class UserController {
             return res.status(500).send(error)
         }
     }
+
+    public async loginController(req: Request, res: Response) {
+        const { user, password } = req.body
+        if(!user || !password) return res.sendStatus(400)
+        try{
+            const login = await this.userServices.login(req.body)
+            if(login){
+                return res.sendStatus(200)
+            }else{
+                return res.sendStatus(401)
+            }
+        } catch(error) {
+
+        }
+    }
 }

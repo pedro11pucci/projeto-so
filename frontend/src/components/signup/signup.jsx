@@ -13,7 +13,7 @@ export const SignUp = () => {
     if(data.get("password") != data.get("confirm_password")){
         window.alert("Senhas não estão iguais")    
     } else {
-      const request = await fetch('/user/create', {
+      const request = fetch('/user/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -23,7 +23,7 @@ export const SignUp = () => {
           password: data.get("password")
         })
       })
-      const response = request
+      const response = await request
       if(response.status == 201) window.alert("Usuário criado")
       if(response.status == 409) window.alert("Usuário já existente")
     }
