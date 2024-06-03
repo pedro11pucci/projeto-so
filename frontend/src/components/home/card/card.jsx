@@ -6,11 +6,12 @@ import {
   Typography,
   Box,
 } from '@mui/material';
+import { format } from 'date-fns';
 
 export const MeetingCard = ({ reservation }) => {
   const {
     name,
-    photoUrl,
+    photo_url,
     location,
     date,
     startTime,
@@ -18,12 +19,14 @@ export const MeetingCard = ({ reservation }) => {
     responsible,
   } = reservation;
 
+  const formattedDate = format(new Date(date), 'dd/MM/yyyy')
+
   return (
     <Card sx={{ maxWidth: 345, margin: '20px' }}>
       <CardMedia
         component="img"
         height="140"
-        image={photoUrl}
+        image={photo_url}
         alt={`Foto da ${name}`}
       />
       <CardContent>
@@ -34,7 +37,7 @@ export const MeetingCard = ({ reservation }) => {
           <Box component="span" fontWeight="fontWeightBold">Local: </Box>{location}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          <Box component="span" fontWeight="fontWeightBold">Data: </Box>{date}
+          <Box component="span" fontWeight="fontWeightBold">Data: </Box>{formattedDate}
         </Typography>
         <Typography variant="body2" color="text.secondary">
           <Box component="span" fontWeight="fontWeightBold">Hora: </Box>{startTime} - {endTime}

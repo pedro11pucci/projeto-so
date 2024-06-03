@@ -18,4 +18,8 @@ reservationRouter.post('/create', upload.single('file'), async (req, res) => {
     await controller.createReservationController(req, res)
 })
 
+reservationRouter.get('/fetch', async (req, res) => {
+    await controller.fetchReservationsController(req, res)
+})
+
 export default reservationRouter

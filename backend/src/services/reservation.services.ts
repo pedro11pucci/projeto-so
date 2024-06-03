@@ -27,4 +27,8 @@ export default class ReservationServices {
 
         return newReservation
     }
+
+    public async fetchReservations() {
+        return await this.reservationRepository.find()
+    }
 }

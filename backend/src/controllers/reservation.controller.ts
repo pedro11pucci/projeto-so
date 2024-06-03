@@ -19,4 +19,14 @@ export default class ReservationController {
             return res.status(500).send(error)
         }
     }
+
+    public async fetchReservationsController(req: Request, res: Response) {
+        try{
+            const reservations = await this.reservationServices.fetchReservations()
+            return res.status(200).send(reservations)
+        }catch(error){
+            console.error(error)
+            return res.status(500).send(error)
+        }
+    }
 }
