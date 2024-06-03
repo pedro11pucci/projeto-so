@@ -2,6 +2,7 @@ import Express from "express";
 import cors from "cors";
 import appDataSource from "./infra/data-source";
 import userRouter from "./routes/user.routes";
+import reservationRouter from "./routes/reservation.routes";
 
 require("dotenv").config()
 const app = Express()
@@ -24,3 +25,4 @@ app.get('/', async (req, res) => {
 })
 
 app.use('/user', userRouter)
+app.use('/reservation', reservationRouter)

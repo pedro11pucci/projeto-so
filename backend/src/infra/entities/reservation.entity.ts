@@ -8,7 +8,7 @@ export class Reservation {
     @Column()
     name!: string
 
-    @Column()
+    @Column({ default: null })
     photo_url!: string
 
     @Column()
@@ -18,10 +18,10 @@ export class Reservation {
     date!: Date
 
     @Column('time')
-    beginning_time!: Date
+    startTime!: Date
 
     @Column('time')
-    end_time!: Date
+    endTime!: Date
 
     @Column()
     responsible!: string
@@ -30,7 +30,7 @@ export class Reservation {
     reason!: string
 
     @Column()
-    informations!: string
+    info!: string
 
     @Column()
     guests!: string

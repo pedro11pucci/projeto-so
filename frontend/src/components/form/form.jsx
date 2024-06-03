@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import {
   CssBaseline,
@@ -18,10 +18,12 @@ import {
   FormControlLabel,
   Checkbox,
 } from '@mui/material';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Header } from '../header/header';
 
 export const Form = () => {
-  const [roomName, setRoomName] = useState('');
+  const [name, setName] = useState('');
   const [location, setLocation] = useState('');
   const [date, setDate] = useState('');
   const [startTime, setStartTime] = useState('');
@@ -31,25 +33,54 @@ export const Form = () => {
   const [info, setInfo] = useState('');
   const [guests, setGuests] = useState('');
   const [file, setFile] = useState(null);
+  const fileInputRef = useRef(null);
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log({
-      roomName,
-      location,
-      date,
-      startTime,
-      endTime,
-      responsible,
-      reason,
-      info,
-      guests,
-      file,
-    });
+
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('file', file);
+    formData.append('location', location);
+    formData.append('date', date);
+    formData.append('startTime', startTime);
+    formData.append('endTime', endTime);
+    formData.append('responsible', responsible);
+    formData.append('reason', reason);
+    formData.append('info', info);
+    formData.append('guests', guests)
+
+    const request = fetch('/reservation/create', {
+        method: 'POST',
+        body: formData
+    })
+
+    const response = await request
+
+    if (response.status === 201) {
+        toast.success('Reserva criada com sucesso!');
+        setName('');
+        setLocation('');
+        setDate('');
+        setStartTime('');
+        setEndTime('');
+        setResponsible('');
+        setReason('');
+        setInfo('');
+        setGuests('');
+        setFile(null);
+        if (fileInputRef.current) {
+            fileInputRef.current.value = ''
+          }
+      } else if (response.status === 400){
+        toast.error('Insira todos os dados.');
+      } else {
+        toast.error('Erro ao criar reunião')
+      }
   };
 
     return (
@@ -66,8 +97,8 @@ export const Form = () => {
                         <TextField
                             label="Nome da Sala"
                             fullWidth
-                            value={roomName}
-                            onChange={(e) => setRoomName(e.target.value)} />
+                            value={name}
+                            onChange={(e) => setName(e.target.value)} />
                     </Grid>
                     <Grid item xs={12}>
                         <TextField
@@ -148,6 +179,17 @@ export const Form = () => {
                     </Grid>
                 </Grid>
             </form>
+            <ToastContainer 
+                position="bottom-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
         </Container></>
     )
 }
