@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   CssBaseline,
   Container,
@@ -21,6 +21,14 @@ import {
 } from '@mui/material';
 
 export const Header = ({ title, buttonText, buttonTo }) => {
+
+    const navigate = useNavigate()
+
+    const handleLogout = () => {
+        localStorage.removeItem('authenticated')
+        navigate('/')
+    }
+
     return (
         <>
             <CssBaseline />
@@ -33,7 +41,7 @@ export const Header = ({ title, buttonText, buttonTo }) => {
                         <Button color="inherit" component={Link} to={buttonTo}>
                             {buttonText}
                         </Button>
-                        <Button color="inherit">Sair</Button>
+                        <Button color="inherit" onClick={handleLogout}>Sair</Button>
                     </Toolbar>
                 </Container>
             </AppBar>

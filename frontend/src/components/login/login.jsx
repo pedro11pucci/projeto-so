@@ -30,6 +30,7 @@ export const Login = () => {
       })
       const response = await request
       if(response.status == 200){
+        localStorage.setItem('authenticated', 'true')
         navigate('/home')
       }
       if(response.status == 401) window.alert("Usuário ou senha inválidos")  
